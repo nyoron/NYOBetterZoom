@@ -17,7 +17,7 @@ How to use it
 -------------
 
  1. Include NYOBetterUIScrollView in your project
- 2. #import the .h and switch you [[UIScrollView alloc] init...] out for [[NYOBetterUIScrollView alloc] init...]
+ 2. \#import the .h and switch you [[UIScrollView alloc] init...] out for [[NYOBetterUIScrollView alloc] init...]
  3. Once the ScrollView is setup with the image subview make sure you tag the subview with ZOOM_VIEW_TAG so that setContentOffset: can find it.
  4. Call [yourScrollView setContentOffset:CGPointZero] once your views are setup to make sure the image doesn't initially appear at contentOffset {0,0}.
 
