@@ -8,11 +8,15 @@
 
 #import <UIKit/UIKit.h>
 
-#define ZOOM_VIEW_TAG 999
-
 
 @interface NYOBetterZoomUIScrollView : UIScrollView {
-
+	UIView *_childView;	// I wanted to use _contentView but Apple got there first ;9
 }
+
+@property (nonatomic, retain) IBOutlet UIView *childView;
+
+- (id)initWithChildView:(UIView *)aChildView;
+- (id)initWithFrame:(CGRect)aFrame andChildView:(UIView *)aChildView;
+
 
 @end
