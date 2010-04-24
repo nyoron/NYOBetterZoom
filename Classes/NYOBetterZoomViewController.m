@@ -41,7 +41,7 @@
     [super viewDidLoad];
 	
 	// Set up our custom ScrollView
-	self.imageScrollView = [[NYOBetterUIScrollView alloc] initWithFrame:self.view.bounds];
+	self.imageScrollView = [[NYOBetterZoomUIScrollView alloc] initWithFrame:self.view.bounds];
 	[self.imageScrollView setBackgroundColor:[UIColor blackColor]];
 	[self.imageScrollView setAutoresizingMask:UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight];
 	[self.imageScrollView setShowsVerticalScrollIndicator:NO];

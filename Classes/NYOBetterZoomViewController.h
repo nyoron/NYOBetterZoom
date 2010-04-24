@@ -7,13 +7,13 @@
 //
 
 #import <UIKit/UIKit.h>
-#import "NYOBetterUIScrollView.h"
+#import "NYOBetterZoomUIScrollView.h"
 
 @interface NYOBetterZoomViewController : UIViewController <UIScrollViewDelegate> {
-	NYOBetterUIScrollView *_imageScrollView;
+	NYOBetterZoomUIScrollView *_imageScrollView;
 }
 
-@property (nonatomic, retain) NYOBetterUIScrollView *imageScrollView;
+@property (nonatomic, retain) NYOBetterZoomUIScrollView *imageScrollView;
 
 @end
 

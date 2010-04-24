@@ -11,7 +11,7 @@
 #define ZOOM_VIEW_TAG 999
 
 
-@interface NYOBetterUIScrollView : UIScrollView {
+@interface NYOBetterZoomUIScrollView : UIScrollView {
 
 }
 

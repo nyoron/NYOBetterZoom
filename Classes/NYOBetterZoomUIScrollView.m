@@ -6,10 +6,10 @@
 //  Copyright 2010 Liam Jones (nyoron.co.uk). All rights reserved.
 //
 
-#import "NYOBetterUIScrollView.h"
+#import "NYOBetterZoomUIScrollView.h"
 
 
-@implementation NYOBetterUIScrollView
+@implementation NYOBetterZoomUIScrollView
 
 
 - (id)initWithFrame:(CGRect)frame {
