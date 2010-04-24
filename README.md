@@ -1,10 +1,10 @@
-NYOBetterZoom (NYOBetterUIScrollView example project)
-=====================================================
+NYOBetterZoom (NYOBetterZoomUIScrollView example project)
+=========================================================
 
 Summary
 -------
 
-This little example project stemmed from the fact that by default UIScrollView chucks small images to the top left corner of it's frame. I (and a lot of other people) would prefer it centred in the view (like Photos.app). Having spent far too long trying to find a solution without any strange issues I finally got it to behave. To save other people some time going round the houses (like I initially did) I'm uploading this example solution.
+This little example project stemmed from the fact that by default UIScrollView chucks small images to the top left corner of it's frame. I (and a lot of other people) would prefer it centred in the scrollview (like Photos.app). Having spent far too long trying to find a solution without any strange issues I finally got it to behave. To save other people some time going round the houses (like I initially did) I'm uploading this example solution.
 
 Feel free to fork and use/improve this (and push back improvements!). It's a start but the code could certainly be improved upon.
 
@@ -16,10 +16,12 @@ The solution I finally settled on is quite simple really (getting to this soluti
 How to use it
 -------------
 
- 1. Include NYOBetterUIScrollView in your project
- 2. \#import the .h and switch you [[UIScrollView alloc] init...] out for [[NYOBetterUIScrollView alloc] init...]
- 3. Once the ScrollView is setup with the image subview make sure you tag the subview with ZOOM_VIEW_TAG so that setContentOffset: can find it.
- 4. Call [yourScrollView setContentOffset:CGPointZero] once your views are setup to make sure the image doesn't initially appear at contentOffset {0,0}.
+ 1. Include NYOBetterZoomUIScrollView in your project
+ 2. \#import the .h and switch you [[UIScrollView alloc] init...] out for [[NYOBetterZoomUIScrollView alloc] init...]
+ 3. Once the ScrollView is setup add your subview with setChildView: rather than addSubview:. (Alternatively you have an initWithChildView: and initWithFrame:andChildView: initialisers)
+ 4. Have your view controller implement UIScrollViewDelegate and have viewForZoomingInScrollView: return the childView.
+
+Possible step 5 - call [yourScrollView setContentOffset:CGPointZero] if your small view is initially appearing in the top left of the NYOBetterZoomUIScrollView instead of centred. With the v2.0 code changes though you hopefully won't need to do this any more.
 
 Example project
 ---------------
