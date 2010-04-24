@@ -14,15 +14,9 @@
 
 
 // Used to work out the minimum zoom, called when device rotates (as aspect ratio of ScrollView changes when this happens). Could become part of NYOBetterUIScrollView but put here for now as you may not want the same behaviour I do in this regard :)
-- (void)setMinimumZoomForCurrentAspectRatio {
-	UIImageView *imageView = ((UIImageView *)[self.imageScrollView viewWithTag:ZOOM_VIEW_TAG]);
-	
-	// We'll retain minimum zoom for the new aspect ratio if we were already at it
-	BOOL wasAtMinimumZoom = NO;
-	if(self.imageScrollView.zoomScale == self.imageScrollView.minimumZoomScale) {
-		wasAtMinimumZoom = YES;
-	}
-	
+- (void)setMinimumZoomForCurrentFrame {
+	UIImageView *imageView = (UIImageView *)[self.imageScrollView childView];
+		
 	// Work out a nice minimum zoom for the image - if it's smaller than the ScrollView then 1.0x zoom otherwise a scaled down zoom so it fits in the ScrollView entirely when zoomed out
 	CGSize imageSize = imageView.image.size;
 	CGSize scrollSize = self.imageScrollView.frame.size;
@@ -31,9 +25,21 @@
 	CGFloat minimumZoom = MIN(1.0, (widthRatio > heightRatio) ? heightRatio : widthRatio);
 	
 	[self.imageScrollView setMinimumZoomScale:minimumZoom];
-	if(wasAtMinimumZoom || self.imageScrollView.zoomScale < minimumZoom) {
-		[self.imageScrollView setZoomScale:minimumZoom animated:YES];
+}
+
+
+- (void)setMinimumZoomForCurrentFrameAndAnimateIfNecessary {
+	BOOL wasAtMinimumZoom = NO;
+
+	if(self.imageScrollView.zoomScale == self.imageScrollView.minimumZoomScale) {
+		wasAtMinimumZoom = YES;
 	}
+	
+	[self setMinimumZoomForCurrentFrame];
+	
+	if(wasAtMinimumZoom || self.imageScrollView.zoomScale < self.imageScrollView.minimumZoomScale) {
+		[self.imageScrollView setZoomScale:self.imageScrollView.minimumZoomScale animated:YES];
+	}	
 }
 
 
@@ -59,26 +65,27 @@
 	//UIImage *image = [UIImage imageNamed:@"wide.png"];
 	UIImageView *imageView = [[UIImageView alloc] initWithImage:image];
 	
-	// Need to make sure we set the ZOOM_VIEW_TAG on this view so the custom ScrollView can find it in setContentOffset:
-	[imageView setTag:ZOOM_VIEW_TAG];
-	
-	
 	// Finish the ScrollView setup
 	[self.imageScrollView setContentSize:imageView.frame.size];
-	[self.imageScrollView addSubview:imageView];
+	[self.imageScrollView setChildView:imageView];
 	[self.imageScrollView setMaximumZoomScale:2.0];
-	[self setMinimumZoomForCurrentAspectRatio];
-	[self.imageScrollView setZoomScale:self.imageScrollView.minimumZoomScale];
-	
-	// Trigger initial setOffset reposition otherwise a small image will turn up at {0,0} initially
-	[self.imageScrollView setContentOffset:CGPointZero];
+	[self setMinimumZoomForCurrentFrame];
+	[self.imageScrollView setZoomScale:self.imageScrollView.minimumZoomScale animated:NO];
 	
 	[imageView release];
 }
 
 
-- (UIView *)viewForZoomingInScrollView:(UIScrollView *)aScrollView {
-	return [aScrollView viewWithTag:ZOOM_VIEW_TAG];
+- (UIView *)viewForZoomingInScrollView:(NYOBetterZoomUIScrollView *)aScrollView {
+	return [aScrollView childView];
+}
+
+- (void)scrollViewDidEndZooming:(NYOBetterZoomUIScrollView *)scrollView withView:(UIView *)view atScale:(float)scale {
+#ifdef DEBUG
+	UIView *theView = [scrollView childView];
+	NSLog(@"view frame: %@", NSStringFromCGRect(theView.frame));
+	NSLog(@"view bounds: %@", NSStringFromCGRect(theView.bounds));
+#endif
 }
 
 
@@ -89,7 +96,7 @@
 
 - (void)didRotateFromInterfaceOrientation:(UIInterfaceOrientation)fromInterfaceOrientation {
 	// Aspect ratio of ScrollView has changed, need to recalculate the minimum zoom
-	[self setMinimumZoomForCurrentAspectRatio];
+	[self setMinimumZoomForCurrentFrameAndAnimateIfNecessary];
 }
 
 
