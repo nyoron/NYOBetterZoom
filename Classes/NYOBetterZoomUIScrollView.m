@@ -90,19 +90,6 @@
 }
 
 
-#pragma mark -
-#pragma mark UIView
-
-
-- (void)willRemoveSubview:(UIView *)subview {
-	// Need to make sure we clean up the _childView if removeFromSuperview is called against it
-	if(subview == _childView) {
-		// Should we be releasing _childView here? I'm assuming UIView's willRemoveSubview takes care of the release but I'm not certain...
-		_childView = nil;
-	}
-	[super willRemoveSubview:subview];
-}
-
 
 // Warn the programmer if they're using regular subview methods (this subclass is only designed for zooming a single view)
 #ifdef DEBUG
