@@ -25,7 +25,7 @@
 
 
 - (id)initWithChildView:(UIView *)aChildView {
-	if (self = [super init]) {
+	if ((self = [super init])) {
         [self setChildView: aChildView];
     }
     return self;
@@ -33,7 +33,7 @@
 
 
 - (id)initWithFrame:(CGRect)aFrame andChildView:(UIView *)aChildView  {
-    if (self = [super initWithFrame:aFrame]) {
+    if ((self = [super initWithFrame:aFrame])) {
         [self setChildView: aChildView];
     }
     return self;
