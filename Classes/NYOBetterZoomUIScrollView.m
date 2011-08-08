@@ -45,15 +45,14 @@
 
 
 - (UIView *)childView {
-    return [[_childView retain] autorelease]; 
+    return _childView; 
 }
 
 
 -(void)setChildView:(UIView *)aChildView {
 	if (_childView != aChildView) {
 		[_childView removeFromSuperview];
-        [_childView release];
-        _childView = [aChildView retain];
+        _childView = aChildView;
 		[super addSubview:_childView];
 		[self setContentOffset:CGPointZero];
     }
@@ -84,9 +83,8 @@
 
 
 - (void)dealloc {
-	[_childView release], _childView = nil;
+	_childView = nil;
 
-    [super dealloc];
 }
 
 
